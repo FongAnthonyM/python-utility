@@ -34,7 +34,7 @@ import pathlib
 from bidict import bidict
 
 # Local Libraries #
-from devices.audiodevice import AudioDevice
+from ..devices.audiodevice import AudioDevice
 
 
 ########## Definitions ##########

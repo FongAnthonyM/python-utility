@@ -41,7 +41,7 @@ import h5py
 import numpy as np
 
 # Local Libraries #
-from io.iotriggers import AudioTrigger
+from ..io.iotriggers import AudioTrigger
 
 
 ########## Definitions ##########
