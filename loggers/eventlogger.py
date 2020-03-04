@@ -41,7 +41,7 @@ import h5py
 import numpy as np
 
 # Local Libraries #
-from ..io.iotriggers import AudioTrigger
+from ..ioutility.iotriggers import AudioTrigger
 
 
 ########## Definitions ##########
@@ -1242,10 +1242,15 @@ class HDF5hierarchicalDatasets(object):
 
     # Item Getter and Setters
     def get_dataset(self, name, id_info=False):
+        if name not in self.child_datasets and name != self.parent_name:
+            raise KeyError("Not an event type")
         data = self.parent_dataset
         child_names = data[self.child_name_field]
         if name != self.parent_name:
             data = data[child_names == name]
+            child_names = data[self.child_name_field]
+        else:
+            data = data[child_names != name]
             child_names = data[self.child_name_field]
         link_ids = data[self.parent_link_name]
         if isinstance(data, np.void):
@@ -1306,7 +1311,6 @@ class HDF5hierarchicalDatasets(object):
 
         return result
 
-
     def add_item(self, item, index):
         parent_item = []
         for dtype in self.parent_dtype:
@@ -1349,7 +1353,6 @@ class HDF5eventLogger(HDF5container):
         super().__init__(path=path)
 
         self.default_child_kwargs = {}
-        self.event_types = {}
         self.start_datetime = None
         self.start_time_counter = None
         self.start_time_offset = None
@@ -1361,6 +1364,12 @@ class HDF5eventLogger(HDF5container):
 
         if init:
             self.construct()
+
+    @property
+    def event_types(self):
+        out = set(self.hierarchy.child_datasets.keys())
+        out.add(self.hierarchy.parent_name)
+        return out
 
     # Container Magic Methods
     def __len__(self):
@@ -1626,7 +1635,7 @@ def recursive_looping(loops, func, previous=None, size=None, **kwargs):
 
 
 if __name__ == "__main__":
-    test_path = pathlib.Path("C:/Users/ChangLab/Documents/PycharmProjects/BehaviorTaskMaster/emotionTasks/emotionCategorizationDial").joinpath("ECwork_B0w0_2020-01-16_11~58~09.h5")
+    test_path = pathlib.Path(__file__).joinpath("ECwork_B0w0_2020-01-16_11~58~09.h5")
     path = pathlib.Path.cwd().joinpath("test.h5")
     '''
     meth = SubjectEventLogger(test_path)
@@ -1643,5 +1652,9 @@ if __name__ == "__main__":
         debug.append(**{"type_": "ThisChild", "1stField": 1})
         debug.get_event_type("ThisChild")
         debug.find_event(1579041281.5, type_="ThisChild")
-        i, f = debug.find_event_range(1579041281.5, datetime.datetime.now(),"ThisChild")
+        i, f = debug.find_event_range(1579041281.5, datetime.datetime.now(), "ThisChild")
         print(debug[0])
+
+    reload = SubjectEventLogger(path)
+    with reload:
+        reload.get_event_type("ThisChild")
