@@ -677,16 +677,20 @@ class HDF5container(object):
             warn(self.path.as_posix() + " file type is not a " + self.FILE_TYPE, stacklevel=2)
         # Validate Attributes
         if not report["attrs"]["valid"]:
-            if o_attrs and report["attrs"]["differences"]["object"] is not None:
+            if o_attrs and report["attrs"]["differences"]["object"]:
                 warn(self.path.as_posix() + " is missing attributes", stacklevel=2)
-            if f_attrs and report["attrs"]["differences"]["file"] is not None:
+                print(report["attrs"]["differences"]["object"])
+            if f_attrs and report["attrs"]["differences"]["file"]:
                 warn(self.path.as_posix() + " has extra attributes", stacklevel=2)
+                print(report["attrs"]["differences"]["file"])
         # Validate Datasets
         if not report["datasets"]["valid"]:
-            if o_datasets and report["datasets"]["differences"]["object"] is not None:
+            if o_datasets and report["datasets"]["differences"]["object"]:
                 warn(self.path.as_posix() + " is missing datasets", stacklevel=2)
-            if f_datasets and report["datasets"]["differences"]["file"] is not None:
+                print(report["datasets"]["differences"]["object"])
+            if f_datasets and report["datasets"]["differences"]["file"]:
                 warn(self.path.as_posix() + " has extra datasets", stacklevel=2)
+                print(report["datasets"]["differences"]["file"])
 
 
 class HDF5dataset(object):
