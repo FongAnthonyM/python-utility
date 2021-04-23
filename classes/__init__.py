@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ __init__.py
-Description:
+Description: 
 """
 __author__ = "Anthony Fong"
-__copyright__ = "Copyright 2020, Anthony Fong"
+__copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
 __version__ = "1.0.0"
@@ -14,9 +14,7 @@ __status__ = "Prototype"
 
 # Default Libraries #
 
-
 # Downloaded Libraries #
-
 
 # Local Libraries #
 
@@ -24,6 +22,4 @@ __status__ = "Prototype"
 # Definitions #
 # Classes #
 
-
-# Main #
 
