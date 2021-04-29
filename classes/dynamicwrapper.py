@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" dynamicinheritor.py
-
+""" dynamicwrapper.py
+Description: 
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
@@ -23,20 +23,20 @@ import copy
 
 # Definitions #
 # Classes #
-class DynamicInheritor(abc.ABC):
-    """A class whose objects call the methods and attributes of other objects, acting as if it is inheriting them.
+class DynamicWrapper(abc.ABC):
+    """A class whose objects call the methods and attributes of other objects and acts as if it is inheriting them.
 
     When an object of this class has an attribute/method call it will call a listed object's attribute/method. This is
     similar to what an @Property decorator can do but without having to write a decorator for each attribute. Attribute/
     method calling is done dynamically where the objects in the list can change during runtime so the available
     attributes/methods will change based on the objects in the list. Since the available attributes/ methods cannot be
-    evaluated until runtime an IDE's auto-complete cannot display what callable options there are.
+    evaluated until runtime, an IDE's auto-complete cannot display what callable options there are.
 
-    _attritbute_as_partents is the list of attributes of this object that contains the objects that will be used for the
+    _attribute_as_parents is the list of attributes of this object that contains the objects that will be used for the
     dynamic calling. This object and subclasses can still have its own defined attributes and methods that are called.
-    Which attribute/method is used for the call is handled in the same as inheritance where it will check if the
-    attribute/method is present in this object if not it will check in the next object in the list. Therefore it is
-    important to ensure the order of _attritbute_as_partents is order of descending inheritance.
+    Which attribute/method is used for the call is handled in the same manner as inheritance where it will check if the
+    attribute/method is present in this object, if not it will check in the next object in the list. Therefore, it is
+    important to ensure the order of _attribute_as_parents is order of descending inheritance.
 
     Class Attributes:
         _attributes_as_parents (:obj:'list' of :obj:'str'): The list of attribute names that will contain the objects to
